@@ -1,6 +1,6 @@
 {
   "name": "adofai-all-hitsound",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "ADOFAI change hitsound to all hitsound.",
   "main": "cli.js",
   "scripts": {
