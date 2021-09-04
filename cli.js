@@ -39,18 +39,26 @@ rl.on('line', line => {
     }
 
     const totalTile = !adofai.pathData ? adofai.angleData.length : adofai.pathData.length;
+    const hitsoundVolumeMap = [ adofai.settings.hitsoundVolume ];
+    for(let a of adofai.actions) {
+        if(a.eventType != 'SetHitsound') continue;
+        hitsoundVolumeMap[Number(a.floor)] = Number(a.hitsoundVolume);
+    }
 
     adofai.settings.hitsound = 'Hat';
     adofai.actions = adofai.actions.filter(a => a.eventType != 'SetHitsound');
 
     let hitsoundCursor = 1;
+    let hitsoundVolume = hitsoundVolumeMap[0];
 
-    for(let i = 2; i <= totalTile; i++) {
+    for(let i = 1; i <= totalTile; i++) {
+        if(hitsoundVolumeMap[i] != null) hitsoundVolume = hitsoundVolumeMap[i];
+
         adofai.actions.push({
             "floor": i,
             "eventType": "SetHitsound",
             "hitsound": utils.hitsoundMap[hitsoundCursor],
-            "hitsoundVolume": 100
+            "hitsoundVolume": hitsoundVolume
         });
 
         hitsoundCursor++;
